@@ -703,6 +703,15 @@ frappe.set_route = function () {
 	return frappe.router.set_route.apply(frappe.router, arguments);
 };
 
+frappe.route_to_field_tab = (args) => {
+	if (cur_frm?.doctype === args.doctype && cur_frm?.docname === args.name) {
+		cur_frm.layout.select_tab(args.tab);
+	} else {
+		frappe.route_hash = "#" + args.tab;
+		frappe.set_route("Form", args.doctype, args.name);
+	}
+};
+
 frappe.get_prev_route = function () {
 	if (frappe.route_history && frappe.route_history.length > 1) {
 		return frappe.route_history[frappe.route_history.length - 2];
